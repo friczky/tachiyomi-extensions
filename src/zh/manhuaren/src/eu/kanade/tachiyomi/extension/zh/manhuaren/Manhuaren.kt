@@ -53,12 +53,39 @@ class Manhuaren : HttpSource() {
         val realUrl = url.newBuilder()
             .setQueryParameter("gsm", "md5")
             .setQueryParameter("gft", "json")
-            .setQueryParameter("gts", now)
             .setQueryParameter("gak", "android_manhuaren2")
             .setQueryParameter("gat", "")
-            .setQueryParameter("gaui", "191909801")
-            .setQueryParameter("gui", "191909801")
-            .setQueryParameter("gut", "0")
+            .setQueryParameter("gui", "1") // user ID (> 0)
+            .setQueryParameter("gts", now) // timestamp yyyy-MM-dd+HH:mm:ss
+            .setQueryParameter("gut", "0") // user type
+            .setQueryParameter("gem", "1")
+            .setQueryParameter("gaui", "1")
+            .setQueryParameter("gln", "") // location
+            .setQueryParameter("gcy", "TW") // country
+            .setQueryParameter("gle", "zh") // language
+            .setQueryParameter("gcl", "dm5") // umeng channel
+            .setQueryParameter("gos", "1") // OS (int)
+            .setQueryParameter("gov", "22_5.1.1") // "{Build.VERSION.SDK_INT}_{Build.VERSION.RELEASE}"
+            .setQueryParameter("gav", "7.0.1") // app version
+            .setQueryParameter("gdi", "358240051111110") // device info
+            .setQueryParameter("gfcl", "dm5") // umeng channel config
+            .setQueryParameter("gfut", "1688319526000") // assign user ID config
+            .setQueryParameter("glut", "1688319526000") // update time config
+            .setQueryParameter("gpt", "com.mhr.mangamini") // package name
+            .setQueryParameter("gciso", "tw") // https://developer.android.com/reference/android/telephony/TelephonyManager#getSimCountryIso()
+            .setQueryParameter("glot", "") // longitude
+            .setQueryParameter("glat", "") // latitude
+            .setQueryParameter("gflot", "") // first location longitude
+            .setQueryParameter("gflat", "") // first location latitude
+            .setQueryParameter("glbsaut", "0") // is allow location (0 or 1)
+            .setQueryParameter("gac", "") // area code
+            .setQueryParameter("gcut", "GMT+8") // time zone
+            .setQueryParameter("gfcc", "") // first country code
+            .setQueryParameter("gflg", "") // first language
+            .setQueryParameter("glcn", "") // country name
+            .setQueryParameter("glcc", "") // country code
+            .setQueryParameter("gflcc", "") // first location country code
+
         return Request.Builder()
             .url(realUrl.setQueryParameter("gsn", generateGSNHash(realUrl.build())).build())
             .headers(headers)
@@ -67,10 +94,7 @@ class Manhuaren : HttpSource() {
     }
 
     override fun headersBuilder() = Headers.Builder().apply {
-        add("X-Yq-Yqci", "{\"le\": \"zh\"}")
         add("User-Agent", "okhttp/3.11.0")
-        add("Referer", "http://www.dm5.com/dm5api/")
-        add("clubReferer", "http://mangaapi.manhuaren.com/")
     }
 
     private fun hashString(type: String, input: String): String {
